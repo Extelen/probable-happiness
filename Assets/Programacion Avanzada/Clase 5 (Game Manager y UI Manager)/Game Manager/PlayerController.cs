@@ -60,6 +60,13 @@ namespace Clases.PA2024.Management
             }
         }
 
+        /// <summary>
+        /// OnControllerColliderHit is called when the controller hits a
+        /// collider while performing a Move.
+        /// </summary>
+        /// <param name="hit">The ControllerColliderHit data associated with this collision.</param>
+        protected virtual void OnControllerColliderHit(ControllerColliderHit hit) { }
+
         // Aca haré el codigo generico de mover al personaje, pero tendre una tecla de Debug para 
         // hacerme daño a mi mismo.
         private void Update()
@@ -87,7 +94,7 @@ namespace Clases.PA2024.Management
         }
 
         // Codigo generico para hacerme daño a mi mismo 😔
-        public void GetDamage()
+        public virtual void GetDamage()
         {
             m_currentHealth--;
             OnHealthChange?.Invoke(m_currentHealth, m_maxHealth);
@@ -100,7 +107,7 @@ namespace Clases.PA2024.Management
 
         // En esta funcion, cuando mi vida sea igual a 0, destruire el objeto,
         // pero, tambien cambiaré el estado del GameManager a GameOver. 
-        public void OnDeath()
+        public virtual void OnDeath()
         {
             GameManager.SwitchState(GameState.GameOver);
             Destroy(gameObject);

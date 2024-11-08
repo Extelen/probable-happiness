@@ -1,35 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class SlimeState_Patrol : SlimeStateBase
+namespace Clases.PA2024.StateMachines
 {
-    public float walkTime;
-
-    private float currentTime;
-
-    public override void Enter()
+    [System.Serializable]
+    public class SlimeState_Patrol : SlimeStateBase
     {
-        base.Enter();
-        currentTime = walkTime;
-        Debug.Log("Me estoy empezando a mover aleatoriamente hacia un punto");
-    }
+        // Variables
+        [SerializeField] private float walkTime;
 
-    public override void Logic()
-    {
-        base.Logic();
+        private float currentTime;
 
-        if (DetectPlayer())
+        // Methods
+        public override void Enter()
         {
-            Controller.stateMachine.SwitchState(Controller.states.followPlayer);
+            base.Enter();
+            currentTime = walkTime;
+            Debug.Log("Me estoy empezando a mover aleatoriamente hacia un punto");
         }
 
-        Debug.Log("Me estoy moviendo");
-
-        currentTime -= Time.deltaTime;
-        if (currentTime <= 0)
+        public override void Logic()
         {
-            Controller.stateMachine.SwitchState(Controller.states.idle);
+            base.Logic();
+
+            if (DetectPlayer())
+            {
+                Controller.StateMachine.SwitchState(Controller.StateMachine.FollowPlayer);
+            }
+
+            Debug.Log("Me estoy moviendo");
+
+            currentTime -= Time.deltaTime;
+            if (currentTime <= 0)
+            {
+                Controller.StateMachine.SwitchState(Controller.StateMachine.Idle);
+            }
         }
     }
 }
-

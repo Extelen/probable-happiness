@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace Clases.PA2024.Inventory
 {
-    public interface IInventoryable
+    public interface IInventoriable
     {
         // Properties
+        public Sprite Icon { get; }
 
         // Methods
 

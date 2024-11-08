@@ -1,32 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class SlimeState_FollowPlayer : SlimeStateBase
+namespace Clases.PA2024.StateMachines
 {
-    public override void Enter()
+    [System.Serializable]
+    public class SlimeState_FollowPlayer : SlimeStateBase
     {
-        base.Enter();
-
-        //Controller.Rigidbody.velocity = Vector3.forward;
-    }
-
-    public override void Logic()
-    {
-        base.Logic();
-
-        Debug.Log("Me estoy moviendo hacia el jugador");
-
-        if (Random.Range(0, 10) == 0)
+        // Methods
+        public override void Enter()
         {
-            Debug.Log("Perdi de vista al jugador");
-            Controller.stateMachine.SwitchState(Controller.states.idle);
+            base.Enter();
+
+            //Controller.Rigidbody.velocity = Vector3.forward;
         }
-    }
 
-    public override void Exit()
-    {
-        base.Exit();
+        public override void Logic()
+        {
+            base.Logic();
 
-        //Controller.Rigidbody.velocity = Vector3.zero;
+            Debug.Log("Me estoy moviendo hacia el jugador");
+
+            if (Random.Range(0, 10) == 0)
+            {
+                Debug.Log("Perdi de vista al jugador");
+                Controller.StateMachine.SwitchState(Controller.StateMachine.Idle);
+            }
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            //Controller.Rigidbody.velocity = Vector3.zero;
+        }
     }
 }

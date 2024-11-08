@@ -1,14 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class SlimeState_Death : SlimeStateBase
+namespace Clases.PA2024.StateMachines
 {
-    public float time;
-    public AnimationCurve curve;
-
-    public override void Enter()
+    [System.Serializable]
+    public class SlimeState_Death : SlimeStateBase
     {
-        base.Enter();
-        Debug.Log("Me mori");
+        // Variables
+        [SerializeField] private float time;
+        [SerializeField] private AnimationCurve curve;
+
+        // Methods
+        public override void Enter()
+        {
+            base.Enter();
+            Debug.Log("Me mori");
+        }
     }
 }

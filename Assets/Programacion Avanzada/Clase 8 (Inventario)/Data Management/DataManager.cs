@@ -21,7 +21,7 @@ namespace Clases.PA2024.Inventory
             if (info == SaveSystem.LoadInfo.Created) Save();
         }
 
-        public void Save()
+        public static void Save()
         {
             SaveSystem.Save(Data, "Inventory");
         }

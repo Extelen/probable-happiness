@@ -2,17 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Para crear una maquina de estados es necesario crear y heredar 3 scripts distintos
+// entre ellos StateMachine, StateFactory y en cada uno de los estados, StateBase.
 public abstract class StateMachine<TState, TController> : MonoBehaviour
 where TState : StateBase<TController>
 where TController : MonoBehaviour
 {
-    [SerializeField] private bool m_debugMode = false;
+    // Variables
+    [Header("State Machine")]
+    [SerializeField] private bool debugMode = false;
 
     private TState currentState;
 
+    // Methods
+    /// <summary>
+    /// Esta funcion es la encargada de inicializar nuestra StateMachine y deberemos pasarle el 
+    /// controlador del objeto y el estado inicial, el cual puede ser null si se quisiera.
+    /// </summary>
+    public void Initialize(TController controller, TState defaultState)
+    {
+        InitializeStates(controller);
+        SwitchState(defaultState);
+    }
+
+    /// <summary>
+    /// Utilizando SwitchState ejecutaremos la funcion Exit del estado actual si es que hay uno corriendo
+    /// y posteriormente utilizaremos la funcion Enter del nuevo estado.
+    /// </summary>
     public void SwitchState(TState newState)
     {
-        if (m_debugMode)
+        if (debugMode)
         {
             Debug.Log($"{gameObject.name} changed its state from: {currentState} to {newState}");
         }
@@ -43,4 +62,11 @@ where TController : MonoBehaviour
             currentState.FixedLogic();
         }
     }
+
+    /// <summary>
+    /// Funcion que debe ser implementada si o si por el hijo de nuestro StateMachine 
+    /// donde se debera inicializar cada uno de nuestros estados para darle el controlador
+    /// principal del objeto.
+    /// </summary>
+    protected abstract void InitializeStates(TController controller);
 }

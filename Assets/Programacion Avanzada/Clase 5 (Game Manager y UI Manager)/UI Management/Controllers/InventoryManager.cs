@@ -36,6 +36,13 @@ namespace Clases.PA2024.Management
             // En cambio, si es "Game Status", el nuevo panel será "Inventory".
             string newPanel = isActive ? "Game Status" : "Inventory";
 
+            bool canToggle = false;
+
+            if (UIManager.Instance.CurrentIdentifier == "Game Status") canToggle = true;
+            else if (UIManager.Instance.CurrentIdentifier == "Inventory") canToggle = true;
+
+            if (!canToggle) return;
+
             UIManager.Instance.SwitchPanel(newPanel);
         }
     }
