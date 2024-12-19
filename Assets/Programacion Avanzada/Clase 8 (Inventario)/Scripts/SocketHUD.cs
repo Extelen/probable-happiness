@@ -22,13 +22,15 @@ namespace Clases.PA2024.Inventory
         private Vector2 startPosition;
 
         // Properties
+        public IInventoriable Inventoriable { get; private set; }
+        public int Count { get; private set; }
 
         // Methods
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
         /// </summary>
-        void Start()
+        void OnEnable()
         {
             startPosition = transform.position;
         }
@@ -39,6 +41,9 @@ namespace Clases.PA2024.Inventory
             {
                 iconRenderer.enabled = false;
                 countRenderer.enabled = false;
+
+                Inventoriable = null;
+                Count = 0;
             }
 
             else
@@ -48,17 +53,20 @@ namespace Clases.PA2024.Inventory
 
                 countRenderer.enabled = true;
                 countRenderer.text = count.ToString();
+
+                Inventoriable = inventoriable;
+                Count = count;
             }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            transform.localScale = Vector3.one * 1.25f;
+            iconRenderer.transform.localScale = Vector3.one * 1.25f;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            transform.localScale = Vector3.one;
+            iconRenderer.transform.localScale = Vector3.one;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -86,9 +94,11 @@ namespace Clases.PA2024.Inventory
                     {
                         if (otherSocket == this) continue;
 
+                        IInventoriable otherInventoriable = otherSocket.Inventoriable;
+                        int otherCount = otherSocket.Count;
 
-
-
+                        otherSocket.SetScriptable(Inventoriable, Count);
+                        SetScriptable(otherInventoriable, otherCount);
                     }
                 }
             }
